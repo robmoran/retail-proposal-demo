@@ -51,32 +51,55 @@ If you have any questions about this proposal or would like to discuss any aspec
       photos: [
         {
           url: 'https://images.unsplash.com/photo-1565008576549-57569a49371d?w=600&h=400&fit=crop',
-          caption: 'Front elevation showing existing shingle condition',
+          caption: 'Front elevation showing existing shingle condition with visible wear patterns and aging.',
           timestamp: '2025-12-15',
         },
         {
           url: 'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=400&fit=crop',
-          caption: 'Close-up of damaged shingles and granule loss',
+          caption: `Replace 1 Skylight with:
+• VELUX VCS 2234 Solar Powered Venting Skylight
+• Room Darkening Shades
+• Factory Flashing Kit
+
+Replace surrounding shingles:
+• Owens Corning - Oakridge
+• Color: Desert Tan`,
           timestamp: '2025-12-15',
         },
         {
           url: 'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=600&h=400&fit=crop',
-          caption: 'Rear roof section with visible wear',
+          caption: `Rear roof section repairs needed:
+• Replace damaged decking (approx 40 sq ft)
+• Install new underlayment
+• Match existing GAF Timberline HDZ shingles
+• Color: Weathered Wood`,
           timestamp: '2025-12-15',
         },
         {
           url: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=600&h=400&fit=crop',
-          caption: 'Chimney flashing requiring replacement',
+          caption: `Chimney flashing replacement:
+• Remove existing counter flashing
+• Install new galvanized step flashing
+• Install new aluminum counter flashing
+• Apply high-grade sealant at all joints`,
           timestamp: '2025-12-15',
         },
         {
           url: 'https://images.unsplash.com/photo-1513467535987-fd81bc7d62f8?w=600&h=400&fit=crop',
-          caption: 'Gutter system assessment',
+          caption: `Gutter assessment findings:
+• Front section shows heavy debris accumulation
+• Recommend 6-inch seamless aluminum gutters
+• Install gutter guards to prevent future clogs
+• Add two additional downspouts for proper drainage`,
           timestamp: '2025-12-15',
         },
         {
           url: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=400&fit=crop',
-          caption: 'Attic ventilation inspection',
+          caption: `Attic ventilation upgrades:
+• Install 4 additional ridge vents
+• Add 6 soffit vents for proper air intake
+• Ensures balanced ventilation system
+• Helps extend roof lifespan and reduce energy costs`,
           timestamp: '2025-12-15',
         },
       ],
