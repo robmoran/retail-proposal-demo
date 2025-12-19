@@ -1,7 +1,7 @@
 import { useProposal } from '../context/ProposalContext';
 
 export default function CreatorHeader() {
-  const { isEditMode, setIsEditMode, setShowFinalizeDialog, isMobile } = useProposal();
+  const { isEditMode, setIsEditMode, setShowFinalizeDialog, isMobile, mobileView, setMobileView } = useProposal();
 
   const handleSave = () => {
     // On mobile in edit mode, just show a toast/feedback
@@ -10,11 +10,18 @@ export default function CreatorHeader() {
     // Switch back to preview mode on mobile
     if (isMobile) {
       setIsEditMode(false);
+      setMobileView('preview');
     }
   };
 
-  // On mobile in edit mode, show Save button instead of Finalize
+  const handleEdit = () => {
+    setIsEditMode(true);
+  };
+
+  // On mobile: show Save button when editing, show Edit button when viewing preview, show Finalize when viewing chat
   const showSaveButton = isMobile && isEditMode;
+  const showEditButton = isMobile && !isEditMode && mobileView === 'preview';
+  const showFinalizeButton = !isMobile || (isMobile && !isEditMode && mobileView === 'chat');
 
   return (
     <div className="creator-header">
@@ -29,28 +36,31 @@ export default function CreatorHeader() {
         </div>
       </div>
 
-      <div className="creator-header-center">
-        <div className="mode-toggle">
-          <button
-            className={`mode-toggle-button ${!isEditMode ? 'active' : ''}`}
-            onClick={() => setIsEditMode(false)}
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M8 2a.75.75 0 01.75.75v4.5h4.5a.75.75 0 010 1.5h-4.5v4.5a.75.75 0 01-1.5 0v-4.5h-4.5a.75.75 0 010-1.5h4.5v-4.5A.75.75 0 018 2z"/>
-            </svg>
-            AI
-          </button>
-          <button
-            className={`mode-toggle-button ${isEditMode ? 'active' : ''}`}
-            onClick={() => setIsEditMode(true)}
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M11.013 2.513a1.75 1.75 0 012.475 0l.499.5a1.75 1.75 0 010 2.474l-7.5 7.5a1.75 1.75 0 01-.757.438l-2.5.5a.75.75 0 01-.884-.884l.5-2.5a1.75 1.75 0 01.438-.757l7.5-7.5zm1.768.707a.25.25 0 00-.354 0L5.25 10.397a.25.25 0 00-.063.108l-.34 1.701 1.701-.34a.25.25 0 00.108-.063l7.177-7.177a.25.25 0 000-.354l-.5-.5z"/>
-            </svg>
-            Edit
-          </button>
+      {/* Desktop: Show AI/Edit toggle */}
+      {!isMobile && (
+        <div className="creator-header-center">
+          <div className="mode-toggle">
+            <button
+              className={`mode-toggle-button ${!isEditMode ? 'active' : ''}`}
+              onClick={() => setIsEditMode(false)}
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 2a.75.75 0 01.75.75v4.5h4.5a.75.75 0 010 1.5h-4.5v4.5a.75.75 0 01-1.5 0v-4.5h-4.5a.75.75 0 010-1.5h4.5v-4.5A.75.75 0 018 2z"/>
+              </svg>
+              AI
+            </button>
+            <button
+              className={`mode-toggle-button ${isEditMode ? 'active' : ''}`}
+              onClick={() => setIsEditMode(true)}
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M11.013 2.513a1.75 1.75 0 012.475 0l.499.5a1.75 1.75 0 010 2.474l-7.5 7.5a1.75 1.75 0 01-.757.438l-2.5.5a.75.75 0 01-.884-.884l.5-2.5a1.75 1.75 0 01.438-.757l7.5-7.5zm1.768.707a.25.25 0 00-.354 0L5.25 10.397a.25.25 0 00-.063.108l-.34 1.701 1.701-.34a.25.25 0 00.108-.063l7.177-7.177a.25.25 0 000-.354l-.5-.5z"/>
+              </svg>
+              Edit
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="creator-header-right">
         {showSaveButton ? (
@@ -63,7 +73,17 @@ export default function CreatorHeader() {
             </svg>
             Save
           </button>
-        ) : (
+        ) : showEditButton ? (
+          <button
+            className="finalize-button edit-button"
+            onClick={handleEdit}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M11.013 2.513a1.75 1.75 0 012.475 0l.499.5a1.75 1.75 0 010 2.474l-7.5 7.5a1.75 1.75 0 01-.757.438l-2.5.5a.75.75 0 01-.884-.884l.5-2.5a1.75 1.75 0 01.438-.757l7.5-7.5zm1.768.707a.25.25 0 00-.354 0L5.25 10.397a.25.25 0 00-.063.108l-.34 1.701 1.701-.34a.25.25 0 00.108-.063l7.177-7.177a.25.25 0 000-.354l-.5-.5z"/>
+            </svg>
+            Edit
+          </button>
+        ) : showFinalizeButton ? (
           <button
             className="finalize-button"
             onClick={() => setShowFinalizeDialog(true)}
@@ -73,7 +93,7 @@ export default function CreatorHeader() {
             </svg>
             Finalize Proposal
           </button>
-        )}
+        ) : null}
       </div>
     </div>
   );

@@ -13,6 +13,8 @@ interface ProposalContextType {
   isMobile: boolean;
   showFinalizeDialog: boolean;
   setShowFinalizeDialog: (show: boolean) => void;
+  mobileView: 'chat' | 'preview';
+  setMobileView: (view: 'chat' | 'preview') => void;
 }
 
 const ProposalContext = createContext<ProposalContextType | undefined>(undefined);
@@ -28,6 +30,7 @@ export function ProposalProvider({ children }: { children: ReactNode }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
   const [showFinalizeDialog, setShowFinalizeDialog] = useState(false);
+  const [mobileView, setMobileView] = useState<'chat' | 'preview'>('chat');
 
   useEffect(() => {
     const handleResize = () => {
@@ -63,6 +66,8 @@ export function ProposalProvider({ children }: { children: ReactNode }) {
         isMobile,
         showFinalizeDialog,
         setShowFinalizeDialog,
+        mobileView,
+        setMobileView,
       }}
     >
       {children}

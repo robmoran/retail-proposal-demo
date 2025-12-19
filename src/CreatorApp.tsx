@@ -4,11 +4,11 @@ import ChatPanel from './components/ChatPanel';
 import EditPanel from './components/EditPanel';
 import ProposalPreview from './components/ProposalPreview';
 import FinalizeDialog from './components/FinalizeDialog';
-import MobileChatBar from './components/MobileChatBar';
+import MobileViewToggle from './components/MobileViewToggle';
 import './CreatorStyles.css';
 
 function CreatorContent() {
-  const { proposal, isEditMode, isMobile } = useProposal();
+  const { proposal, isEditMode, isMobile, mobileView } = useProposal();
 
   return (
     <div className="creator-layout">
@@ -29,23 +29,30 @@ function CreatorContent() {
           </div>
         )}
 
-        {/* Mobile: Show edit panel OR preview (not both) */}
+        {/* Mobile: Show edit form when in edit mode */}
         {isMobile && isEditMode && (
           <div className="mobile-edit-panel">
             <EditPanel />
           </div>
         )}
 
-        {/* Mobile: Show preview only in AI mode */}
-        {isMobile && !isEditMode && (
+        {/* Mobile: Show chat when not editing and mobileView is 'chat' */}
+        {isMobile && !isEditMode && mobileView === 'chat' && (
+          <div className="mobile-chat-panel">
+            <ChatPanel />
+          </div>
+        )}
+
+        {/* Mobile: Show preview when not editing and mobileView is 'preview' */}
+        {isMobile && !isEditMode && mobileView === 'preview' && (
           <div className="creator-right-panel">
             <ProposalPreview proposal={proposal} />
           </div>
         )}
       </div>
 
-      {/* Mobile: Show chat bar only in AI mode */}
-      {isMobile && !isEditMode && <MobileChatBar />}
+      {/* Mobile: Show view toggle only when not in edit mode */}
+      {isMobile && !isEditMode && <MobileViewToggle />}
 
       <FinalizeDialog />
     </div>
