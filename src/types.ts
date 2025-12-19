@@ -55,6 +55,7 @@ export interface LineItem {
 }
 
 export interface Estimate {
+  id: string;
   title: string;
   description?: string;
   lineItems: LineItem[];
@@ -62,6 +63,13 @@ export interface Estimate {
   tax?: number;
   total: number;
   notes?: string;
+}
+
+export interface AddOn {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
 }
 
 export interface FileAttachment {
@@ -80,6 +88,7 @@ export interface Proposal {
   photoSections: PhotoSection[];
   estimates: Estimate[];
   attachments?: FileAttachment[];
+  addOns?: AddOn[];
   createdAt: string;
   updatedAt: string;
 }

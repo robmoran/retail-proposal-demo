@@ -84,6 +84,7 @@ If you have any questions about this proposal or would like to discuss any aspec
   ],
   estimates: [
     {
+      id: 'premium',
       title: 'Premium Option - Architectural Shingles',
       description: 'High-quality architectural shingles with enhanced warranty and superior aesthetics',
       lineItems: [
@@ -165,6 +166,7 @@ If you have any questions about this proposal or would like to discuss any aspec
       notes: 'This estimate includes a 50-year material warranty from GAF and a 10-year labor warranty from Premium Roofing & Construction. Project timeline: 3-4 days weather permitting. Price valid for 30 days.',
     },
     {
+      id: 'standard',
       title: 'Standard Option - 3-Tab Shingles',
       description: 'Quality 3-tab shingles offering reliable protection at an economical price point',
       lineItems: [
@@ -243,6 +245,26 @@ If you have any questions about this proposal or would like to discuss any aspec
       total: 16707.60,
       notes: 'This estimate includes a 25-year material warranty from GAF and a 10-year labor warranty from Premium Roofing & Construction. Project timeline: 3-4 days weather permitting. Price valid for 30 days.',
     },
+  ],
+  addOns: [
+    {
+      id: 'gutters',
+      name: 'New Gutters',
+      description: '6-inch seamless aluminum gutters with downspouts',
+      price: 2850
+    },
+    {
+      id: 'gutter-guards',
+      name: 'Gutter Guards',
+      description: 'Premium gutter protection system to prevent clogs',
+      price: 1650
+    },
+    {
+      id: 'skylight',
+      name: 'Skylight Installation',
+      description: 'Install one Velux fixed skylight',
+      price: 1950
+    }
   ],
   attachments: [
     {
