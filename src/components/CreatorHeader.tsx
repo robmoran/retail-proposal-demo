@@ -18,10 +18,15 @@ export default function CreatorHeader() {
     setIsEditMode(true);
   };
 
-  // On mobile: show Save button when editing, show Edit button when viewing preview, show Finalize when viewing chat
+  const handlePreview = () => {
+    // Open homeowner preview in new tab
+    window.open('/homeowner', '_blank');
+  };
+
+  // On mobile: show Save button when editing, show Edit button when viewing preview, show Finalize in chat or preview (not when editing)
   const showSaveButton = isMobile && isEditMode;
   const showEditButton = isMobile && !isEditMode && mobileView === 'preview';
-  const showFinalizeButton = !isMobile || (isMobile && !isEditMode && mobileView === 'chat');
+  const showFinalizeButton = !isMobile || (isMobile && !isEditMode);
 
   return (
     <div className="creator-header">
@@ -73,27 +78,43 @@ export default function CreatorHeader() {
             </svg>
             Save
           </button>
-        ) : showEditButton ? (
-          <button
-            className="finalize-button edit-button"
-            onClick={handleEdit}
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M11.013 2.513a1.75 1.75 0 012.475 0l.499.5a1.75 1.75 0 010 2.474l-7.5 7.5a1.75 1.75 0 01-.757.438l-2.5.5a.75.75 0 01-.884-.884l.5-2.5a1.75 1.75 0 01.438-.757l7.5-7.5zm1.768.707a.25.25 0 00-.354 0L5.25 10.397a.25.25 0 00-.063.108l-.34 1.701 1.701-.34a.25.25 0 00.108-.063l7.177-7.177a.25.25 0 000-.354l-.5-.5z"/>
-            </svg>
-            Edit
-          </button>
-        ) : showFinalizeButton ? (
-          <button
-            className="finalize-button"
-            onClick={() => setShowFinalizeDialog(true)}
-          >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"/>
-            </svg>
-            Finalize Proposal
-          </button>
-        ) : null}
+        ) : (
+          <>
+            {showEditButton && (
+              <button
+                className="finalize-button edit-button"
+                onClick={handleEdit}
+                aria-label="Edit"
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M11.013 2.513a1.75 1.75 0 012.475 0l.499.5a1.75 1.75 0 010 2.474l-7.5 7.5a1.75 1.75 0 01-.757.438l-2.5.5a.75.75 0 01-.884-.884l.5-2.5a1.75 1.75 0 01.438-.757l7.5-7.5zm1.768.707a.25.25 0 00-.354 0L5.25 10.397a.25.25 0 00-.063.108l-.34 1.701 1.701-.34a.25.25 0 00.108-.063l7.177-7.177a.25.25 0 000-.354l-.5-.5z"/>
+                </svg>
+                <span className="edit-button-text">Edit</span>
+              </button>
+            )}
+            <button
+              className="preview-button"
+              onClick={handlePreview}
+              title="Preview homeowner view"
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 3.5a5.5 5.5 0 00-5.5 5.5c0 1.5.6 2.9 1.6 3.9L3 14h3v-3l-1.2 1.2A3.5 3.5 0 118 12.5V11a4.5 4.5 0 110-9V3.5z"/>
+              </svg>
+              <span className="preview-button-text">Preview</span>
+            </button>
+            {showFinalizeButton && (
+              <button
+                className="finalize-button"
+                onClick={() => setShowFinalizeDialog(true)}
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"/>
+                </svg>
+                Finalize Proposal
+              </button>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

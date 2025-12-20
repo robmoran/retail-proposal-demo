@@ -1,19 +1,34 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ProposalPreview from './components/ProposalPreview';
 import SelectionPanel from './components/SelectionPanel';
 import MobileSelectionBar from './components/MobileSelectionBar';
 import CreatorApp from './CreatorApp';
+import HomeownerPage from './HomeownerPage';
 import { sampleProposal } from './sampleData';
 import './ProposalStyles.css';
 
 function App() {
-  // Toggle between 'viewer' (homeowner view) and 'creator' (contractor creation view)
-  const [mode, setMode] = useState<'viewer' | 'creator'>('creator');
+  // Simple client-side routing based on pathname
+  const [mode, setMode] = useState<'viewer' | 'creator' | 'homeowner'>('creator');
+
+  useEffect(() => {
+    // Check URL path on mount
+    const path = window.location.pathname;
+    if (path === '/homeowner') {
+      setMode('homeowner');
+    } else {
+      setMode('creator');
+    }
+  }, []);
 
   // For demo purposes, show a mode switcher
   // In production, this would be route-based or user-role based
   if (mode === 'creator') {
     return <CreatorApp />;
+  }
+
+  if (mode === 'homeowner') {
+    return <HomeownerPage />;
   }
 
   return (

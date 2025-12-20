@@ -55,18 +55,6 @@ If you have any questions about this proposal or would like to discuss any aspec
           timestamp: '2025-12-15',
         },
         {
-          url: 'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=400&fit=crop',
-          caption: `Replace 1 Skylight with:
-• VELUX VCS 2234 Solar Powered Venting Skylight
-• Room Darkening Shades
-• Factory Flashing Kit
-
-Replace surrounding shingles:
-• Owens Corning - Oakridge
-• Color: Desert Tan`,
-          timestamp: '2025-12-15',
-        },
-        {
           url: 'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?w=600&h=400&fit=crop',
           caption: `Rear roof section repairs needed:
 • Replace damaged decking (approx 40 sq ft)

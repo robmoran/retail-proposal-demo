@@ -24,9 +24,6 @@ export default function EstimatePage({ data }: EstimatePageProps) {
         <thead>
           <tr>
             <th>Description</th>
-            <th className="numeric">Qty</th>
-            <th>Unit</th>
-            <th className="numeric">Unit Price</th>
             <th className="numeric">Total</th>
           </tr>
         </thead>
@@ -38,11 +35,6 @@ export default function EstimatePage({ data }: EstimatePageProps) {
                 {item.notes && (
                   <div className="line-notes">{item.notes}</div>
                 )}
-              </td>
-              <td className="numeric">{item.quantity || '-'}</td>
-              <td>{item.unit || '-'}</td>
-              <td className="numeric">
-                {item.unitPrice ? formatCurrency(item.unitPrice) : '-'}
               </td>
               <td className="numeric">{formatCurrency(item.total)}</td>
             </tr>
