@@ -30,10 +30,10 @@ function CreatorContent() {
           </div>
         )}
 
-        {/* Mobile: Show preview with inline editing when in edit mode */}
+        {/* Mobile: Show edit form when in edit mode */}
         {isMobile && isEditMode && (
-          <div className="creator-right-panel">
-            <ProposalPreview proposal={proposal} />
+          <div className="mobile-edit-panel">
+            <EditPanel />
           </div>
         )}
 

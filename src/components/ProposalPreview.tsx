@@ -1,6 +1,6 @@
 import { Proposal } from '../types';
-import TitlePageEditable from './TitlePageEditable';
-import IntroPageEditable from './IntroPageEditable';
+import TitlePage from './TitlePage';
+import IntroPage from './IntroPage';
 import PhotoSection from './PhotoSection';
 import EstimatePage from './EstimatePage';
 import AttachmentsPage from './AttachmentsPage';
@@ -13,8 +13,8 @@ interface ProposalPreviewProps {
 export default function ProposalPreview({ proposal }: ProposalPreviewProps) {
   return (
     <div className="proposal-container">
-      <TitlePageEditable data={proposal.titlePage} />
-      <IntroPageEditable data={proposal.introPage} />
+      <TitlePage data={proposal.titlePage} />
+      <IntroPage data={proposal.introPage} />
 
       {proposal.photoSections.map((section, index) => (
         <PhotoSection key={index} data={section} />
