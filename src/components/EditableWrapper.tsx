@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, ReactNode } from 'react';
 
 interface EditableWrapperProps {
-  id: string;
+  id?: string;
   type: 'text' | 'multiline';
   value: string;
   onSave: (value: string) => void;
@@ -11,7 +11,6 @@ interface EditableWrapperProps {
 }
 
 export default function EditableWrapper({
-  id,
   type,
   value,
   onSave,
