@@ -1,0 +1,406 @@
+/* ===== INLINE EDITING SYSTEM ===== */
+/* Aesthetic: Confident Precision - Sharp, intentional, professional */
+
+:root {
+  /* Edit Mode Colors - Burnt Orange accent */
+  --edit-primary: #f97316;
+  --edit-primary-dark: #ea580c;
+  --edit-hover-outline: rgba(249, 115, 22, 0.35);
+  --edit-hover-bg: rgba(249, 115, 22, 0.03);
+  --edit-active-border: #f97316;
+  --edit-active-shadow: 0 0 0 4px rgba(249, 115, 22, 0.12);
+  --edit-backdrop: rgba(0, 0, 0, 0.06);
+
+  /* Neutrals */
+  --edit-white: #ffffff;
+  --edit-gray-50: #f9fafb;
+  --edit-gray-100: #f3f4f6;
+  --edit-gray-200: #e5e7eb;
+  --edit-gray-400: #9ca3af;
+  --edit-gray-600: #4b5563;
+  --edit-gray-700: #374151;
+  --edit-gray-900: #111827;
+
+  /* Elevations */
+  --edit-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --edit-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --edit-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --edit-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  /* Timing functions - Snappy and confident */
+  --edit-timing-sharp: cubic-bezier(0.4, 0, 0.2, 1);
+  --edit-timing-enter: cubic-bezier(0, 0, 0.2, 1);
+  --edit-timing-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  /* Z-index stack */
+  --z-edit-backdrop: 100;
+  --z-edit-container: 110;
+  --z-edit-indicator: 105;
+}
+
+/* ===== EDITABLE WRAPPER ===== */
+
+.editable-wrapper {
+  position: relative;
+  transition: all 180ms var(--edit-timing-sharp);
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-block;
+  min-width: 120px;
+}
+
+.editable-wrapper.hovering {
+  background: var(--edit-hover-bg);
+  outline: 2px dashed var(--edit-hover-outline);
+  outline-offset: -1px;
+  transform: translateY(-1px);
+}
+
+/* Edit Indicator - Orange badge with pencil */
+.edit-indicator {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: var(--edit-primary);
+  color: var(--edit-white);
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: var(--edit-shadow-lg);
+  z-index: var(--z-edit-indicator);
+  pointer-events: none;
+  animation: editIndicatorPop 200ms var(--edit-timing-enter) backwards;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+@keyframes editIndicatorPop {
+  0% {
+    opacity: 0;
+    transform: translateY(4px) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.edit-indicator svg {
+  opacity: 0.95;
+}
+
+/* ===== EDITING STATE ===== */
+
+.edit-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--edit-backdrop);
+  z-index: var(--z-edit-backdrop);
+  animation: backdropFadeIn 220ms var(--edit-timing-enter);
+  backdrop-filter: blur(1px);
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.edit-container {
+  position: relative;
+  z-index: var(--z-edit-container);
+  animation: editContainerEnter 240ms var(--edit-timing-enter);
+}
+
+@keyframes editContainerEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===== INPUT FIELDS ===== */
+
+.edit-input {
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: var(--edit-gray-900);
+  background: var(--edit-white);
+  border: 2px solid var(--edit-active-border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  box-shadow: var(--edit-active-shadow),
+              var(--edit-shadow-xl);
+  outline: none;
+  transition: all 200ms var(--edit-timing-sharp);
+  line-height: inherit;
+}
+
+.edit-input.multiline {
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.65;
+  font-family: inherit;
+}
+
+.edit-input:focus {
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.18),
+              var(--edit-shadow-xl);
+  border-color: var(--edit-primary-dark);
+}
+
+.edit-input::placeholder {
+  color: var(--edit-gray-400);
+  opacity: 1;
+}
+
+/* ===== EDIT TOOLBAR ===== */
+
+.edit-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: var(--edit-white);
+  border-radius: 10px;
+  box-shadow: var(--edit-shadow-lg);
+  animation: toolbarSlideUp 260ms var(--edit-timing-enter) 60ms backwards;
+  border: 1px solid var(--edit-gray-200);
+}
+
+@keyframes toolbarSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.edit-save-btn,
+.edit-cancel-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 160ms var(--edit-timing-sharp);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.edit-save-btn {
+  background: var(--edit-primary);
+  color: var(--edit-white);
+  box-shadow: var(--edit-shadow-sm);
+}
+
+.edit-save-btn:hover {
+  background: var(--edit-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(249, 115, 22, 0.35);
+}
+
+.edit-save-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--edit-shadow-sm);
+}
+
+.edit-cancel-btn {
+  background: var(--edit-gray-100);
+  color: var(--edit-gray-700);
+}
+
+.edit-cancel-btn:hover {
+  background: var(--edit-gray-200);
+  transform: translateY(-1px);
+}
+
+.edit-cancel-btn:active {
+  transform: translateY(0);
+}
+
+.edit-hint {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--edit-gray-400);
+  font-weight: 500;
+  white-space: nowrap;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: 0.01em;
+}
+
+/* ===== FOCUS VISIBLE (Accessibility) ===== */
+
+.edit-input:focus-visible,
+.edit-save-btn:focus-visible,
+.edit-cancel-btn:focus-visible {
+  outline: 2px solid var(--edit-primary);
+  outline-offset: 2px;
+}
+
+/* ===== RESPONSIVE - MOBILE ===== */
+
+@media (max-width: 1024px) {
+  /* Make edit wrappers always show on mobile in edit mode */
+  .editable-wrapper.hovering {
+    background: var(--edit-hover-bg);
+    outline: 2px dashed var(--edit-hover-outline);
+    outline-offset: -1px;
+  }
+
+  .editable-wrapper {
+    min-width: 100px;
+    /* Add padding for easier tapping */
+    padding: 4px;
+    margin: -4px;
+  }
+
+  /* Always visible edit icon on mobile */
+  .edit-indicator {
+    position: static;
+    display: inline-flex;
+    background: var(--edit-primary);
+    color: var(--edit-white);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    gap: 4px;
+    box-shadow: var(--edit-shadow-md);
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .edit-indicator svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .edit-indicator span {
+    display: inline;
+  }
+
+  /* Edit container takes more space on mobile */
+  .edit-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Input styling for mobile */
+  .edit-input {
+    padding: 14px 16px;
+    font-size: 16px; /* Prevent iOS zoom */
+    border-radius: 12px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .edit-input.multiline {
+    min-height: 160px;
+  }
+
+  /* Toolbar fixed at bottom on mobile when keyboard is open */
+  .edit-toolbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding: 12px;
+    margin: 0;
+    border-radius: 0;
+    border-top: 1px solid var(--edit-gray-200);
+    z-index: calc(var(--z-edit-container) + 10);
+    background: var(--edit-white);
+  }
+
+  .edit-hint {
+    display: none;
+  }
+
+  .edit-save-btn,
+  .edit-cancel-btn {
+    flex: 1;
+    justify-content: center;
+    padding: 14px 16px;
+    font-size: 15px;
+    font-weight: 600;
+    min-height: 48px; /* iOS touch target */
+  }
+
+  /* Backdrop slightly darker on mobile */
+  .edit-backdrop {
+    background: rgba(0, 0, 0, 0.15);
+  }
+}
+
+@media (max-width: 768px) {
+  .edit-input {
+    border-radius: 8px;
+  }
+
+  .edit-toolbar {
+    border-radius: 8px;
+  }
+
+  .edit-save-btn,
+  .edit-cancel-btn {
+    border-radius: 6px;
+  }
+}
+
+/* ===== REDUCED MOTION ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+
+@media (prefers-contrast: high) {
+  .editable-wrapper.hovering {
+    outline-width: 3px;
+  }
+
+  .edit-input {
+    border-width: 3px;
+  }
+
+  .edit-indicator {
+    border: 2px solid var(--edit-white);
+  }
+}

@@ -6,6 +6,8 @@ import { sampleProposal } from '../sampleData';
 interface ProposalContextType {
   proposal: Proposal;
   updateProposal: (updates: Partial<Proposal>) => void;
+  updateTitlePage: (field: string, value: string) => void;
+  updateIntroPage: (field: string, value: string) => void;
   chatMessages: ChatMessage[];
   addChatMessage: (message: ChatMessage) => void;
   isEditMode: boolean;
@@ -45,6 +47,44 @@ export function ProposalProvider({ children }: { children: ReactNode }) {
     setProposal(prev => ({ ...prev, ...updates }));
   };
 
+  const updateTitlePage = (field: string, value: string) => {
+    setProposal(prev => {
+      // Handle nested fields like "contractor.name" or "homeowner.address"
+      const fields = field.split('.');
+      if (fields.length === 1) {
+        return {
+          ...prev,
+          titlePage: {
+            ...prev.titlePage,
+            [field]: value
+          }
+        };
+      } else {
+        // Nested field update
+        return {
+          ...prev,
+          titlePage: {
+            ...prev.titlePage,
+            [fields[0]]: {
+              ...(prev.titlePage[fields[0] as keyof typeof prev.titlePage] as object),
+              [fields[1]]: value
+            }
+          }
+        };
+      }
+    });
+  };
+
+  const updateIntroPage = (field: string, value: string) => {
+    setProposal(prev => ({
+      ...prev,
+      introPage: {
+        ...prev.introPage,
+        [field]: value
+      }
+    }));
+  };
+
   const addChatMessage = (message: ChatMessage) => {
     setChatMessages(prev => [...prev, message]);
 
@@ -59,6 +99,8 @@ export function ProposalProvider({ children }: { children: ReactNode }) {
       value={{
         proposal,
         updateProposal,
+        updateTitlePage,
+        updateIntroPage,
         chatMessages,
         addChatMessage,
         isEditMode,

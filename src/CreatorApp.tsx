@@ -6,6 +6,7 @@ import ProposalPreview from './components/ProposalPreview';
 import FinalizeDialog from './components/FinalizeDialog';
 import MobileViewToggle from './components/MobileViewToggle';
 import './CreatorStyles.css';
+import './EditableStyles.css';
 
 function CreatorContent() {
   const { proposal, isEditMode, isMobile, mobileView } = useProposal();
@@ -29,10 +30,10 @@ function CreatorContent() {
           </div>
         )}
 
-        {/* Mobile: Show edit form when in edit mode */}
+        {/* Mobile: Show preview with inline editing when in edit mode */}
         {isMobile && isEditMode && (
-          <div className="mobile-edit-panel">
-            <EditPanel />
+          <div className="creator-right-panel">
+            <ProposalPreview proposal={proposal} />
           </div>
         )}
 
